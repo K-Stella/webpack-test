@@ -32,7 +32,7 @@ module.exports = {
   */
   output: {
     path: path.resolve(__dirname,'dist'),
-    filename: '[name].[hash:8].js',
+    filename: 'js/[name].[hash:8].js',
     publicPath: publicPath
   },
   // 设置环境：生产（production)/开发(development)
@@ -52,6 +52,25 @@ module.exports = {
           fallback: 'style-loader',
           use: 'css-loader'
         })
+      },
+
+      // img loader
+      {
+        test: /\.(png|gif|jpg|jpe?g)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 1024,
+            name: 'img/[name].[hash:8].[ext]'
+          }
+        }]
+      },
+
+      // js loader
+      {
+        test: /\.js$/,
+        use: 'babel-loader',
+        exclude: /node_modules/
       }
     ]
   },
@@ -63,7 +82,14 @@ module.exports = {
       template: path.resolve(__dirname,'./src/index.html')
     }),
 
-    new ExtractTextPlugin('css/index.[chunkhash].css')
+    new ExtractTextPlugin('css/index.[chunkhash].css'),
+
+    // 每次打包时清除特定的多余文件
+    new CleanWebpackPlugin(['dist/main.*.js','dist/css/index.*.css'],
+    {
+      verbose: true,
+      dry: false
+    })
   ],
 
   // 服务器设置，当运行webpack-dev-server会加载此处的资源
@@ -76,6 +102,7 @@ module.exports = {
   */
   devServer: {
     port: 3000,
-    host: 'localhost'
+    host: 'localhost',
+    inline: true
   }
 }

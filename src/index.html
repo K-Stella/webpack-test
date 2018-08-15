@@ -5,6 +5,29 @@
   <title>MyWeb</title>
 <head>
 <body>
-  <h1>webpack demo</h1>
+  <div class="head-box">
+    <h1 class="head-title">Title</h1>
+  </div>
+  <div class="item-add">
+    <input class="add" type="text" name="story" id="own"></input>
+    <button class="addbtn" onclick="javascript:addItem()">Add</button>
+  </div>
+  <div class="content-box">
+    <div class="conten-li">
+      <ul id="item" class="idex">
+      </ul>
+    </div>
+  </div>
+  <script>
+    function addItem(){
+      var intent = document.getElementById('own').value;
+      console.log("intent:",intent);
+      var ul = document.getElementById('item');
+      var li = document.createElement('li');
+      li.setAttribute('class','newli');
+      li.innerHTML = intent;
+      ul.appendChild(li);
+    }
+  </script>
 </body>
 </html>

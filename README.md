@@ -1,7 +1,7 @@
 # webpack-test
 webpack simple configuration
 
-#Usage
+# Usage
 npm install;
 
 npm run server;
